@@ -1,30 +1,17 @@
 package com.example.plantshandbook
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.plantshandbook.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private val adapter = PlantAdapter()
-    private val imageIdList = listOf<Int>(
-        R.drawable.chamomile,
-        R.drawable.cherry,
-        R.drawable.beautiful_flower,
-        R.drawable.pink_flower,
-        R.drawable.rose,
-        R.drawable.poppy,
-        R.drawable.poppy2,
-        R.drawable.raflezia,
-        R.drawable.red_flower1,
-        R.drawable.sunflower,
-        R.drawable.tulip,
-        R.drawable.viola,
-        R.drawable.violet_flower,
-        R.drawable.water_lily,
-    )
-    private var plantIndex = 0
+    private lateinit var editLauncher :ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +19,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+
+        val contract = ActivityResultContracts.StartActivityForResult()
+        editLauncher = registerForActivityResult(contract) {
+            if (it.resultCode == RESULT_OK) {
+                adapter.addPlant(it.data?.getSerializableExtra("plant") as Plant)
+            }
+        }
     }
 
     private fun init() = with(binding) {
@@ -40,11 +34,7 @@ class MainActivity : AppCompatActivity() {
         rcView.adapter = adapter
 
         btnAddPlant.setOnClickListener {
-            if (plantIndex >= imageIdList.size) plantIndex = 0
-
-            val plant = Plant(imageIdList[plantIndex], "flower ${plantIndex + 1 }")
-            adapter.addPlant(plant)
-            plantIndex++
+            editLauncher.launch(Intent(this@MainActivity, EdiltActivity::class.java))
         }
     }
 }

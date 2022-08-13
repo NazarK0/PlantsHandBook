@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="photo_of_plant">photo of plant</string>
+    <string name="next_image">Next image</string>
+    <string name="plant_title">title</string>
+    <string name="plant_description">description</string>
+    <string name="done">Done</string>
 </resources>

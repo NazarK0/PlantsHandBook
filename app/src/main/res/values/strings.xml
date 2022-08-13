@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">PlantsHandBook</string>
     <string name="photo_of_plant">photo of plant</string>
+    <string name="next_image">Next image</string>
+    <string name="image_description">Image of plant</string>
+    <string name="plant_title">title</string>
+    <string name="plant_description">description</string>
+    <string name="done">Done</string>
 </resources>
